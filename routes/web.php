@@ -25,3 +25,6 @@ Route::resource('categories', 'CategoryController');
 // Route::post('/categories','CategoryController@store')->name('categories.store');
 // Route::put('/categories/{category}','CategoryController@update')->name('categories.update');
 // Route::delete('/categories/{category}','CategoryController@destroy')->name('categories.destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
