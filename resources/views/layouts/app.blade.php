@@ -36,11 +36,38 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        {{-- products index  --}}
+                        <li class="nav-item">
+                            <a href="{{route('products.index')}}" class="nav-link">Products</a>
+                        </li>
 
+                        {{-- add product --}}
+                        <li class="nav-item">
+                            <a href="{{route('products.create')}}" class="nav-link">Add Product</a>
+                        </li>
+
+                        {{-- add category --}}
+                        <li class="nav-item">
+                            <a href="{{route('categories.create')}}" class="nav-link">Add Category</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        {{-- transactions --}}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Transactions</a>
+                        </li>
+    
+                        {{-- cart button --}}
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                            Cart
+                            <span class="badge badge-secondary">2</span>
+                        </a>
+                        </li>
+
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
