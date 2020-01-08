@@ -8,7 +8,9 @@
 
 	</div>
 	<div class="card-footer">
-		<form action="#">
+		<form action="{{route('carts.update',['cart' => $product->id])}}" method="POST">
+			@csrf
+			@method('PUT')
 			<input type="number" name="quantity" id="quantity" class="form-control-sm w-100 mb-3" min="1">
 			<button class="btn btn-primary w-100 mb-3">Add to cart</button>
 		</form>

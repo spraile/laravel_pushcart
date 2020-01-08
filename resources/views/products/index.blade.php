@@ -11,6 +11,7 @@
 		</div>
 
 	@endif
+	@include('products.includes.error-status')
 	<div class="row">
 	
 	@foreach($products as $product)

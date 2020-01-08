@@ -62,9 +62,9 @@
     
                         {{-- cart button --}}
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{route('carts.index')}}" class="nav-link">
                             Cart
-                            <span class="badge badge-secondary">2</span>
+                            <span class="badge badge-secondary">{{ Session::has('cart') ? count(Session::get('cart')) : "0"}}</span>
                         </a>
                         </li>
 

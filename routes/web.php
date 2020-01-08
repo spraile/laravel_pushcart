@@ -18,6 +18,8 @@ Route::get('/', function () {
 
 Route::resource('categories', 'CategoryController');
 Route::resource('products','ProductController');
+Route::delete('/carts/empty','CartController@empty')->name('carts.empty');
+Route::resource('carts','CartController');
 
 // Route::get('/categories/create', 'CategoryController@create')->name('categories.create');
 // Route::get('/categories','CategoryController@index')->name('categories.index');
