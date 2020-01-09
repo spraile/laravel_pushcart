@@ -57,7 +57,7 @@
 
                         {{-- transactions --}}
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Transactions</a>
+                            <a href="{{route('transactions.index')}}" class="nav-link">Transactions</a>
                         </li>
     
                         {{-- cart button --}}

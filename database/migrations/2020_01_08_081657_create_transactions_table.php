@@ -16,15 +16,15 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('transaction_code')->unique();
-            $table->float('total');
+            $table->float('total')->nullable();
 
-            $table->unsignedBigInteger('payment_mode_id')->nullable();
+            $table->unsignedBigInteger('payment_mode_id')->nullable()->default(1);
             $table->foreign('payment_mode_id')
                 ->references('id')->on('payment_modes')
                 ->onDelete('set null')
                 ->onUpdate('set null');
 
-            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable()->default(1);
             $table->foreign('status_id')
                 ->references('id')->on('statuses')
                 ->onDelete('set null')

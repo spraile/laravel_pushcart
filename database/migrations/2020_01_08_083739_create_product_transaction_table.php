@@ -30,7 +30,7 @@ class CreateProductTransactionTable extends Migration
 
             $table->integer('quantity');
             $table->float('subtotal');
-
+            $table->float('price');
             $table->timestamps();
         });
     }

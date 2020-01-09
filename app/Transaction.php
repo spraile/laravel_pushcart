@@ -23,7 +23,7 @@ class Transaction extends Model
 
     public function products()
     {
-    	return $this->belongsToMany('App\Product')
-    		->withPivot('quantity','subtotal');
+    	return $this->belongsToMany('App\Product','product_transaction')
+    		->withPivot('quantity','subtotal','price');
     }
 }

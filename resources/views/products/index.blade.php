@@ -20,7 +20,7 @@
 						<select name="category" id="category" class="form-control-sm d-inline">
 							<option value="">All</option>
 							@foreach($categories as $category)
-							<option value="{{$category->id}}" >{{$category->name}}</option>
+							<option value="{{$category->id}}" {{ $category->id == Request::query('category') ? "selected" : "" }} >{{$category->name}}</option>
 							@endforeach
 						</select>
 						<button class="btn-sm btn-primary">Filter</button>
