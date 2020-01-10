@@ -20,6 +20,8 @@
 
 		<td>Status:</td>
 		<td>
+			{{$transaction->status->name}}
+			@can('isAdmin')
 			<form action="{{route('transactions.update',['transaction' => $transaction->id])}}" method="POST">
 				@csrf
 				@method('PUT')
@@ -31,6 +33,7 @@
 				<button class="btn-sm btn-warning">Change status</button>
 
 			</form>
+			@endcan
 		</td>
 	</tr>
 </tbody>

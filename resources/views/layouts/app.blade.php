@@ -40,7 +40,8 @@
                         <li class="nav-item">
                             <a href="{{route('products.index')}}" class="nav-link">Products</a>
                         </li>
-
+                        
+                        @can('isAdmin')
                         {{-- add product --}}
                         <li class="nav-item">
                             <a href="{{route('products.create')}}" class="nav-link">Add Product</a>
@@ -50,16 +51,20 @@
                         <li class="nav-item">
                             <a href="{{route('categories.create')}}" class="nav-link">Add Category</a>
                         </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-
+                        
+                        @can('isLogged')
                         {{-- transactions --}}
                         <li class="nav-item">
                             <a href="{{route('transactions.index')}}" class="nav-link">Transactions</a>
                         </li>
-    
+                        @endcannot
+                        
+                        @cannot('isAdmin')
                         {{-- cart button --}}
                         <li class="nav-item">
                             <a href="{{route('carts.index')}}" class="nav-link">
@@ -67,6 +72,7 @@
                             <span class="badge badge-secondary">{{ Session::has('cart') ? count(Session::get('cart')) : "0"}}</span>
                         </a>
                         </li>
+                        @endcannot
 
                         <!-- Authentication Links -->
                         @guest

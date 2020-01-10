@@ -18,11 +18,18 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Transaction $transaction)
     {
-        $user_id = Auth::user()->id;
-        $transactions = Transaction::whereIn('user_id', [$user_id])->get();
+        $this->authorize('viewAny',$transaction);
 
+
+        if (Auth::user()->role_id === 1) {
+            $transactions = Transaction::all();
+        } else {
+        $user_id = Auth::user()->id;
+
+        $transactions = Transaction::whereIn('user_id', [$user_id])->get();
+    }
         return view('transactions.index')->with('transactions',$transactions)->with('statuses',Status::all());
     }
 
@@ -75,7 +82,7 @@ class TransactionController extends Controller
 
         Session::forget('cart');
 
-
+        
         // pivot table: product_id/transaction_id/quantity/subtotal
         return redirect(route('transactions.show',['transaction' => $transaction->id]));
 
@@ -90,6 +97,8 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
+        $this->authorize('view',$transaction);
+
 
         return view('transactions.show')->with('transaction',$transaction)->with('statuses',Status::all());
     }
@@ -117,7 +126,7 @@ class TransactionController extends Controller
         $transaction->status_id = $status;
         $transaction->save();
         $request->session()->flash('status','Status update successful');
-        return redirect(route('transactions.show',['transaction' => $transaction->id]));
+        return redirect(route('transactions.index'));
         
     }
 

@@ -75,10 +75,17 @@
 							<td colspan="2" class="text-right">Total</td>
 							<td >&#8369; {{number_format($total,2)}}</td>
 							<td>
-								<form action="{{ route('transactions.store')}}" method="POST">
+								@can('isLogged')
+								<form action="
+								{{route('transactions.store')}}
+								" method="POST">
 									@csrf
 									<button class="btn-sm btn-primary w-100">Checkout</button>
 								</form>
+								@endcan
+								@cannot('isLogged')
+									<a href="{{route('login')}}"><button class="btn-sm btn-primary w-100">Checkout</button></a>
+								@endcannot	
 							</td>
 						</tr>
 					</tfoot>

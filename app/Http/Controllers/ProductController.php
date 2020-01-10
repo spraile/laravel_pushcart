@@ -32,8 +32,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Product $product)
     {
+        $this->authorize('create',$product);
         $categories = Category::all();
         return view('products.create')->with('categories',$categories);
     }
@@ -44,8 +45,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
+        $this->authorize('create',$product);
+
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -85,6 +88,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->authorize('update',$product);
+
         $categories = Category::all();
         return view('products.edit')->with('product',$product)->with('categories',$categories);
     }
@@ -98,6 +103,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('update',$product);
+
          $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -129,6 +136,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize('delete',$product);
+
         $product->delete();
         return redirect(route('products.index'))->with('status','Product has been removed');
     }
