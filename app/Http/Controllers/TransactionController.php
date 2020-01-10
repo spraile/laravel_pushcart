@@ -43,6 +43,44 @@ class TransactionController extends Controller
         //
     }
 
+    public function create_paypal_payment(Request $request)
+    {
+        if(!Session::has('cart')){
+            return ['message' => "Session cart not found"];
+        }
+
+        $data = json_decode($request->getContent(), true);
+        // return [$data['transactionCode']];
+        $transaction = new Transaction;
+        $transaction->user_id = Auth::user()->id;
+        $transaction->transaction_code = $data['transactionCode'];
+
+        $transaction->save();
+
+        $product_ids = array_keys(Session::get('cart'));
+        $products = Product::find($product_ids);
+        $total = 0;
+        foreach($products as $product) {
+            $product->quantity = Session::get("cart.$product->id");
+            $product->subtotal = $product->price * $product->quantity;
+            $total += $product->subtotal;
+
+            $transaction->products()
+            ->attach(
+                $product->id,
+                [
+                    'quantity'=> $product->quantity, 
+                    'subtotal' => $product->subtotal,
+                    'price' => $product->price
+            ]);
+        }
+
+        $transaction->total = $total;
+        $transaction->save();
+
+        Session::forget('cart');
+        return ["message"];
+    }
     /**
      * Store a newly created resource in storage.
      *

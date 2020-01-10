@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="container">
 	<h3>My Cart</h3>
 	@if(Session::has('status'))
@@ -73,18 +75,20 @@
 								</form>
 							</td>
 							<td colspan="2" class="text-right">Total</td>
-							<td >&#8369; {{number_format($total,2)}}</td>
+							<td >&#8369; <span id="total">{{number_format($total,2)}}</span></td>
 							<td>
 								@can('isLogged')
 								<form action="
 								{{route('transactions.store')}}
 								" method="POST">
 									@csrf
-									<button class="btn-sm btn-primary w-100">Checkout</button>
+									<button class="btn-sm btn-primary w-100 mb-2">Checkout</button>
 								</form>
+								<div id="paypal-btn"></div>
 								@endcan
 								@cannot('isLogged')
 									<a href="{{route('login')}}"><button class="btn-sm btn-primary w-100">Checkout</button></a>
+
 								@endcannot	
 							</td>
 						</tr>
@@ -98,5 +102,41 @@
 	<div class="alert alert-info text-center">Cart is empty</div>
 	@endif
 </div>
+@if(Session::has('cart'))
+<script src="https://www.paypal.com/sdk/js?client-id=AUpvBMGYEcd00QUYqNQsY-sbfl-_nomTTPeJPoNnkqzYLwf8XwnnTdStnm8wBpYAcVi4KOqgT5lXNGcB"></script>
+<script>
+	paypal.Buttons({
+	createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: {{$total}}
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+
+        let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let jdata = { transactionCode : data.orderID }
+        fetch('{{route('transactions.paypal')}}', {
+        	method : "post",
+        	body : JSON.stringify({transaction : jdata}),
+        	headers : {'X-CSRF-TOKEN': csrfToken}
+
+        })
+        .then( response => response.json())
+        .then( res => console.log(res))
+      });
+    }
+}).render('#paypal-btn');
+</script>
+@endif
+	
 
 @endsection

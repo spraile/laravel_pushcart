@@ -15,10 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 
 });
+Route::delete('/carts/empty','CartController@empty')->name('carts.empty');
+Route::post("/transactions/paypal",'TransactionController@create_paypal_payment')->name("transactions.paypal");
 
 Route::resource('categories', 'CategoryController');
 Route::resource('products','ProductController');
-Route::delete('/carts/empty','CartController@empty')->name('carts.empty');
 Route::resource('carts','CartController');
 Route::resource('transactions','TransactionController');
 
