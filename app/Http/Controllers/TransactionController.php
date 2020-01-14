@@ -53,8 +53,10 @@ class TransactionController extends Controller
         // return [$data['transactionCode']];
         $transaction = new Transaction;
         $transaction->user_id = Auth::user()->id;
+        $transaction->payment_mode_id = 2;
+        // $transaction->transaction_code = implode("",array_values($data));
         $transaction->transaction_code = $data['transactionCode'];
-
+        
         $transaction->save();
 
         $product_ids = array_keys(Session::get('cart'));
@@ -79,7 +81,7 @@ class TransactionController extends Controller
         $transaction->save();
 
         Session::forget('cart');
-        return ["message"];
+        return [$transaction->user_id, $transaction->transaction_code, $transaction->total ];
     }
     /**
      * Store a newly created resource in storage.

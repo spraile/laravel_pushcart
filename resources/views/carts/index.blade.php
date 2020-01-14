@@ -103,7 +103,7 @@
 	@endif
 </div>
 @if(Session::has('cart'))
-<script src="https://www.paypal.com/sdk/js?client-id=AUpvBMGYEcd00QUYqNQsY-sbfl-_nomTTPeJPoNnkqzYLwf8XwnnTdStnm8wBpYAcVi4KOqgT5lXNGcB"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ASpgcoheZVyBBz6fqklRaY0z6JGWf_GvSg37YC1-ycDfMUpM8VFkuVhADgQAknf7gI9ni_T9Lih5sPuP"></script>
 <script>
 	paypal.Buttons({
 	createOrder: function(data, actions) {
@@ -126,7 +126,7 @@
         let jdata = { transactionCode : data.orderID }
         fetch('{{route('transactions.paypal')}}', {
         	method : "post",
-        	body : JSON.stringify({transaction : jdata}),
+        	body : JSON.stringify(jdata),
         	headers : {'X-CSRF-TOKEN': csrfToken}
 
         })
