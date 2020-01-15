@@ -131,7 +131,7 @@
 
         })
         .then( response => response.json())
-        .then( res => console.log(res))
+        .then( res => window.location.assign(res.url))
       });
     }
 }).render('#paypal-btn');

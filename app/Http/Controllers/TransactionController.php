@@ -81,7 +81,9 @@ class TransactionController extends Controller
         $transaction->save();
 
         Session::forget('cart');
-        return [$transaction->user_id, $transaction->transaction_code, $transaction->total ];
+
+        return ['url' => "transactions/".$transaction->id];
+        // return redirect(route('transactions.show',['transaction' => $transaction->id]));
     }
     /**
      * Store a newly created resource in storage.
